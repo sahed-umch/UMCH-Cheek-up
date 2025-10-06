@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PDF by Number</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width:700px; margin:30px auto; }
+    input{padding:8px; font-size:16px;}
+    button{padding:8px 12px; font-size:16px;}
+    #viewer{margin-top:20px;}
+  </style>
+</head>
+<body>
+  <h2>নম্বর দিয়ে পিডিএফ দেখুন / ডাউনলোড</h2>
+  <input id="pdfIdInput" placeholder="নম্বর লিখুন (যেমন 1001)" />
+  <button onclick="openPDF()">Open</button>
+  <div id="viewer"></div>
+
+  <script>
+    function openPDF(){
+      const num = document.getElementById('pdfIdInput').value.trim();
+      const viewer = document.getElementById('viewer');
+      viewer.innerHTML = '';
+
+      if(!num){ 
+        viewer.innerHTML = "<p style='color:red;'>নম্বর দিন।</p>"; 
+        return; 
+      }
+
+      // এখানে ধরে নিচ্ছি PDF ফাইলগুলো একই রেপোতে আছে (root এ)
+      const url = num + ".pdf";
+
+      // চেক করার জন্য লিংক সেট করো
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.width = "100%";
+      iframe.height = "600";
+      iframe.style.border = "1px solid #ccc";
+      viewer.appendChild(iframe);
+
+      const dl = document.createElement('p');
+      dl.innerHTML = `<a href="${url}" target="_blank" download>Download PDF</a>`;
+      viewer.appendChild(dl);
+    }
+  </script>
+</body>
+</html>
